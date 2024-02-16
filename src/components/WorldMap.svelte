@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
 	import { scaleSequential, interpolatePiYG } from 'd3';
-	import RangeSlider from "svelte-range-slider-pips";
 	 
 	let geojsonData;
 	let currentYearIndex = 0; // Initial index
