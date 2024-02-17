@@ -184,6 +184,12 @@
 		align-items: center; /* This will vertically align the slider and message */
 		}
 
+	.legand-message {
+		font-size: 18px;
+		color: rgb(173, 0, 0);
+		font-weight: bold;
+		}
+
 	.year-display {
 		margin-top: 10px;
 		font-size: 25px;
@@ -202,5 +208,6 @@
 		<div class="slider-message">(You can slide the brown bar to change the year)</div>
 		<div class="year-display">Year: {selectedYear}</div>
 		<input type="range" min="0" max="21" bind:value={currentYearIndex}>
+		<div class="legand-message">(Countries that don't have available data are colored black)</div>
 	  </div>
 	 <svg width="1200" height="1200" class="drawMaps"></svg>

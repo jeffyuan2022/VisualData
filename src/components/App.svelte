@@ -20,6 +20,9 @@
         z-index: 10;">
         </div>
     </section>
+    <section class="graph">
+        <h2 style="margin-top: 1px">© 2024 Andrew Zhao and Yiheng Yuan. All Rights Reserved.</h2>
+    </section>
 
 </main>
 
