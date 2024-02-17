@@ -6,7 +6,7 @@
 <main>
 
     <section class="graph">
-        <h1 style="margin-top: 1px">Tracking the Pace of Global Energy Consumption: A Quinquennial Analysis from 2000 to 2020</h1>
+        <h1 style="margin-top: 1px">Tracking the Pace of Global Energy Consumption: An Annual Analysis from 2000 to 2021</h1>
         <WorldMap/>
         <div id="tooltip" style="position: absolute;
         text-align: center;
@@ -58,9 +58,14 @@
     }
 
     h1 {
+        font-family: 'Roboto', sans-serif;
         font-size: 60px;
-        font-weight: 300;
-        line-height: 1;
+        font-weight: 700; /* Bold for emphasis */
+        line-height: 1.2;
+        color: #333; /* Dark grey for high contrast and readability */
+        text-align: center;
+        margin: 0 auto;
+        max-width: 95%; /* Ensures padding on smaller screens */
     }
 
     .graph {

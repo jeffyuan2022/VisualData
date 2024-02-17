@@ -8,7 +8,11 @@
 	let filteredData = [];
 	let endYear;
 	
-	const yearIntervals = [2000, 2005, 2010, 2015, 2020];
+	const yearIntervals = [];
+
+	for (let year = 2000; year < 2022; year++) {
+		yearIntervals.push(year);
+	}
 	 
 	let selectedYear = yearIntervals[currentYearIndex];
 	$: {selectedYear = yearIntervals[currentYearIndex], console.log(selectedYear);
@@ -16,11 +20,11 @@
         endYear = proposedEndYear > 2022 ? 2022 : proposedEndYear; // Adjust end year if it exceeds 2022
     }
 	 
-	const regionalChangeScale = scaleSequential(interpolatePiYG).domain([10, -10]);
+	const regionalChangeScale = scaleSequential(interpolatePiYG).domain([5, -5]);
 	 
 	onMount(async () => {
-	  const response = await fetch('output_2.geojson');
-	  geojsonData = await response.json();
+	  	const response = await fetch('output_3.geojson');
+	  	geojsonData = await response.json();
 	});
 	 
 	// Reactive statement to log the structure of geojsonData.features (for debugging)
@@ -37,24 +41,29 @@
 	}
    
 	function drawMap() {
-	  // Clear existing map elements
-	  d3.select('svg').selectAll('*').remove();
+		// Clear existing map elements
+		d3.select('svg').selectAll('*').remove();
 
-		// Adjust the width and height if necessary to fit the map well within the view
-		const width = 1200; // This will make the map responsive to the width of the body
-  		const height = 700;
+	// Adjust the width and height if necessary to fit the map well within the view
+	const width = 1200; // This will make the map responsive to the width of the body
+  	const height = 700;
 	 
-	  const projection = d3.geoNaturalEarth1()
-	  .scale(width / 1.7 / Math.PI)
+	const projection = d3.geoNaturalEarth1()
+	  	.scale(width / 1.7 / Math.PI)
     	.rotate([60, 0])
         .center([0, 10])
         .translate([width / 2, height / 2]);
 	 
-	  const path = d3.geoPath().projection(projection);
+	const path = d3.geoPath().projection(projection);
 	 
-	  const tooltip = d3.select('#tooltip');
+	// Define a transition for the map update
+	const transition = d3.transition()
+        .duration(550) // Duration in milliseconds
+        .ease(d3.easeLinear); // Specify an easing function
+
+	const tooltip = d3.select('#tooltip');
 	  
-	  d3.select('svg')
+	d3.select('svg')
 	 .selectAll('path')
 	 .data(filteredData)
 	 .enter().append('path')
@@ -71,7 +80,7 @@
 		<br>Region: ${d.properties.Region}
 		<br>Regional Change: ${parseFloat(d.properties.regional_change).toFixed(2)}%
 		<br>Country Change: ${d.properties.country_energy_cons_change == null ? 'N/A' : parseFloat(d.properties.country_energy_cons_change).toFixed(2)+"%"}
-		<br>Average GDP changes: ${d.properties.total_gdp_percentage_change == null ? 'N/A' : parseFloat(d.properties.total_gdp_percentage_change).toFixed(2)+"%"}`)
+		`)
 		
 		.style('top', (event.pageY - 10) + 'px')
 		.style('left', (event.pageX + 10) + 'px');
@@ -155,18 +164,12 @@
 	input[type="range"]::-webkit-slider-thumb {
 	  -webkit-appearance: none; /* Override default look */
 	  appearance: none;
-	  width: 100px; /* Set a specific slider handle width */
+	  width: 60px; /* Set a specific slider handle width */
 	  height: 25px; /* Slider handle height */
 	  background: #af5e4c; /* Green background */
 	  cursor: pointer; /* Cursor on hover */
 	}
 	
-	input[type="range"]::-moz-range-thumb {
-	  width: 100px; /* Set a specific slider handle width */
-	  height: 25px; /* Slider handle height */
-	  background: #af5e4c; /* Green background */
-	  cursor: pointer; /* Cursor on hover */
-	}
 
 	.slider-message {
 		display: inline-block; /* or block if you want it on a new line */
@@ -196,8 +199,8 @@
 	 
 	 <!-- Component Markup -->
 	 <div class="slider-container">
-		<div class="slider-message">(You can slide the brown bar to change the year range)</div>
-		<div class="year-display">Year Range: {selectedYear} - {endYear}</div>
-		<input type="range" min="0" max="4" bind:value={currentYearIndex}>
+		<div class="slider-message">(You can slide the brown bar to change the year)</div>
+		<div class="year-display">Year: {selectedYear}</div>
+		<input type="range" min="0" max="21" bind:value={currentYearIndex}>
 	  </div>
 	 <svg width="1200" height="1200" class="drawMaps"></svg>
